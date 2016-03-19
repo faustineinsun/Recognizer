@@ -7,21 +7,21 @@
   <meta name="description" content="All about recognizer">
   <meta name="author" content="faustineinsun">
 
-	<!--link rel="stylesheet/less" href="less/bootstrap.less" type="text/css" /-->
-	<!--link rel="stylesheet/less" href="less/responsive.less" type="text/css" /-->
-	<!--script src="js/less-1.3.3.min.js"></script-->
-	<!--append ‘#!watch’ to the browser URL, then refresh the page. -->
+  <!--link rel="stylesheet/less" href="less/bootstrap.less" type="text/css" /-->
+  <!--link rel="stylesheet/less" href="less/responsive.less" type="text/css" /-->
+  <!--script src="js/lib/less-1.3.3.min.js"></script-->
+  <!--append ‘#!watch’ to the browser URL, then refresh the page. -->
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-	<!--link href="css/bootstrap.min.css" rel="stylesheet"-->
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-	<link href="css/style.css" rel="stylesheet">
+  <!-- Latest compiled and minified CSS -->
+  <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"-->
+  <!--link href="css/bootstrap.min.css" rel="stylesheet"-->
+  <!-- Optional theme -->
+  <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"-->
+  <link href="css/style.css" rel="stylesheet">
 
   <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
   <!--[if lt IE 9]>
-    <script src="js/html5shiv.js"></script>
+  <script src="js/lib/html5shiv.js"></script>
   <![endif]-->
 
   <!-- Fav and touch icons -->
@@ -31,44 +31,39 @@
   <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
   <link rel="shortcut icon" href="img/favicon.png">
 
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<!--script type="text/javascript" src="js/bootstrap.min.js"></script-->
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/scripts.js"></script>
-    <script type="text/javascript" src="js/scalaJS/example-opt.js"></script>
+  <script type="text/javascript" src="js/lib/jquery.min.js"></script>
+  <!--script type="text/javascript" src="js/bootstrap.min.js"></script-->
+  <!-- Latest compiled and minified JavaScript -->
+  <!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script-->
+  <script type="text/javascript" src="js/scripts.js"></script>
+  <script type="text/javascript" src="js/drawingboard.js"></script>
 </head>
 
 <body>
-<div class="container">
-          <br>
-            <div class="alert alert-warning alert-dismissable">
-                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <h4>
-                    Recogonizer
-                </h4> &#x2668;
-            </div>
-            <div class="row clearfix">
-                <div class="col-md-12 column">
-                    <!--install workbench https://github.com/lihaoyi/workbench which is an addon of scala.js that can restart the app when a new compilation run finishes, and show debug log in the Chrome console-->
-                    <!--script type="text/javascript" src="/workbench.js"></script-->
+  <div class="container">
+    <!--header-->
+    <h4>
+      Recogonizer &#x2668;
+    </h4>
 
-                    <canvas style="display: block" id="drawingboard" />
-                    <script>
-                    </script>
-                </div>
-            </div>
-        <div class="col-md-12 column">
-        </div>
-<div class="row clearfix">
-    </div>
-<br> <br> <br> <br> <br>
+    <!--drawing board-->
+    <div id="drawingboard"></div>
+    <script type="text/javascript">
+    $(document).ready(function() {
+      prepareCanvas();
+    });
+    </script>
+
+    <button onclick="clearCanvas()">Clear</button>
+    <button type="button">Save</button>
+
+    <!--bottom-->
     <div class="row clearfix">
       <div class="col-md-12 column">
         <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
       </div>
-<br> <br> <br> <br> <br>
     </div>
-</div>
+
+  </div>
 </body>
 </html>
