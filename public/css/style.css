@@ -1,3 +1,13 @@
 canvas{
   background-color: black;
 }
+
+#showingboard {
+  position: absolute;
+  margin: 1%;
+  width: 145px;
+  height: 145px;
+  left: 300px;
+  top: 60px;
+  background-color: gray;
+}

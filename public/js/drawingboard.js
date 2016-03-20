@@ -77,3 +77,9 @@ function clearCanvas() {
   clickY = new Array();
   clickDrag = new Array();
 }
+
+function getImage() {
+  var imgDataURL = canvas.toDataURL();
+  console.log("imgDataURL: " + imgDataURL);
+  //document.write('<img src="'+img+'"/>');
+}
