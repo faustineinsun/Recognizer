@@ -80,18 +80,17 @@ function clearCanvas() {
 
 function getImage() {
   var imgDataURL = canvas.toDataURL();
-  //console.log("imgDataURL: " + imgDataURL);
-  //document.write('<img src="'+img+'"/>');
-  drawDataURIOnCanvas(imgDataURL);
+  return drawDataURIOnCanvas(imgDataURL, 112, 112, "showSavedImg");
+  //console.log(drawDataURIOnCanvas(imgDataURL, 28, 28, "showSmallImg"));
 }
 
-function drawDataURIOnCanvas(imgDataURL) {
-  var canvasDiv = document.getElementById('showSavedImg');
+function drawDataURIOnCanvas(imgDataURL, width, height, id) {
+  var canvasDiv = document.getElementById(id);
   var newCanvas = document.createElement('canvas');
-  newCanvas.setAttribute('width', '112px');
-  newCanvas.setAttribute('height', '112px');
-  newCanvas.setAttribute('id', 'newCanvas');
-  var oldCanvas = document.getElementById("newCanvas");
+  newCanvas.setAttribute('width', width+'px');
+  newCanvas.setAttribute('height', height+'px');
+  newCanvas.setAttribute('id', 'canvas'+id);
+  var oldCanvas = document.getElementById('canvas'+id);
   if (oldCanvas != null) {
     canvasDiv.removeChild(oldCanvas);
   }
@@ -101,6 +100,9 @@ function drawDataURIOnCanvas(imgDataURL) {
   var img = new Image();
   img.src = imgDataURL
   img.onload = function () {
-    ctx.drawImage(img,0,0, 112, 112);
+    ctx.drawImage(img,0,0, width, height);
   }
+  //document.getElementById(id).value = imgDataURL;
+  //return document.getElementById('canvas'+id).toDataURL("image/png").toString();
+  return imgDataURL;
 }

@@ -12,6 +12,16 @@ canvas{
   background-color: gray;
 }
 
+#showSmallImg {
+  position: absolute;
+  margin: 1%;
+  width: 28px;
+  height: 28px;
+  left: 430px;
+  top: 60px;
+  background-color: #A9A9A9;
+}
+
 #showAnswer {
   position: absolute;
   margin: 1%;

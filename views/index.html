@@ -54,11 +54,15 @@
     });
     </script>
 
+    <div id="showtext"></div>
+
     <div id="showSavedImg"></div>
+    <img src="img/out.png" id="showSmallImg">
+    <!--img src="img/out.png" id="showSmallImg"-->
     <div id="showAnswer"></div>
 
-    <button id="button-clearImg" onclick="clearCanvas()">Clear</button>
-    <button id="button-saveDrawing" onclick="getImage()">Save</button>
+    <button id="button-clearImg">Clear</button>
+    <button id="button-saveDrawing">Save</button>
     <button id="button-showResult">Recognize Digit</button>
     <script type="text/javascript">
     var defaultStr = "Write a digit in the canvas and then click \"Save\"";
@@ -68,9 +72,12 @@
 
     $(document).ready(function(){
       $('#button-clearImg').click(function(){
+        clearCanvas();
         $('#showAnswer').text(defaultStr);
       });
       $('#button-saveDrawing').click(function(){
+        var imgdataurl = getImage();
+        $.post('/saveimg', {"imgurl":imgdataurl}, function() {});
         $('#showAnswer').text(afterSave);
       });
       $('#button-showResult').click(function(){
