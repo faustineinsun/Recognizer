@@ -47,7 +47,6 @@
     </h4>
 
     <!--drawing board-->
-
     <div id="drawingboard"></div>
     <script type="text/javascript">
     $(document).ready(function() {
@@ -55,14 +54,30 @@
     });
     </script>
 
-    <div id="showingboard">
-      <script type="text/javascript">
-      </script>
-    </div>
+    <div id="showSavedImg"></div>
+    <div id="showAnswer"></div>
 
-    <button onclick="clearCanvas()">Clear</button>
-    <button onclick="getImage()">Save</button>
+    <button id="button-clearImg" onclick="clearCanvas()">Clear</button>
+    <button id="button-saveDrawing" onclick="getImage()">Save</button>
+    <button id="button-showResult">Recognize Digit</button>
+    <script type="text/javascript">
+    var defaultStr = "Write a digit in the canvas and then click \"Save\"";
+    var afterSave = "Now it time to click \"Recognize Digit\"";
+    var showResult = "The digit you wrote was:";
+    $('#showAnswer').text(defaultStr);
 
+    $(document).ready(function(){
+      $('#button-clearImg').click(function(){
+        $('#showAnswer').text(defaultStr);
+      });
+      $('#button-saveDrawing').click(function(){
+        $('#showAnswer').text(afterSave);
+      });
+      $('#button-showResult').click(function(){
+        $('#showAnswer').text(showResult);
+      });
+    });
+    </script>
 
     <!--bottom-->
     <br> <br>

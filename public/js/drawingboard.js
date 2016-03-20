@@ -80,6 +80,27 @@ function clearCanvas() {
 
 function getImage() {
   var imgDataURL = canvas.toDataURL();
-  console.log("imgDataURL: " + imgDataURL);
+  //console.log("imgDataURL: " + imgDataURL);
   //document.write('<img src="'+img+'"/>');
+  drawDataURIOnCanvas(imgDataURL);
+}
+
+function drawDataURIOnCanvas(imgDataURL) {
+  var canvasDiv = document.getElementById('showSavedImg');
+  var newCanvas = document.createElement('canvas');
+  newCanvas.setAttribute('width', '112px');
+  newCanvas.setAttribute('height', '112px');
+  newCanvas.setAttribute('id', 'newCanvas');
+  var oldCanvas = document.getElementById("newCanvas");
+  if (oldCanvas != null) {
+    canvasDiv.removeChild(oldCanvas);
+  }
+  canvasDiv.appendChild(newCanvas);
+  var ctx = newCanvas.getContext('2d');
+
+  var img = new Image();
+  img.src = imgDataURL
+  img.onload = function () {
+    ctx.drawImage(img,0,0, 112, 112);
+  }
 }

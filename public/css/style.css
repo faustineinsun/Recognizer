@@ -2,12 +2,21 @@ canvas{
   background-color: black;
 }
 
-#showingboard {
+#showSavedImg {
   position: absolute;
   margin: 1%;
-  width: 145px;
-  height: 145px;
+  width: 112px;
+  height: 112px;
   left: 300px;
   top: 60px;
   background-color: gray;
+}
+
+#showAnswer {
+  position: absolute;
+  margin: 1%;
+  width: 112px;
+  height: 112px;
+  left: 300px;
+  top: 180px;
 }
