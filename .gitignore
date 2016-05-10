@@ -5,9 +5,9 @@ node_modules
 *target/ 
 .idea/
 ml-spark.iml
-train.csv
-trainOrg.csv
-wordcountoutput/
+train*.csv
+test*.csv
+lr/
 
 # Logs
 logs
