@@ -6,6 +6,7 @@ import org.apache.spark.mllib.classification.ClassificationModel
 import org.apache.spark.mllib.evaluation.MulticlassMetrics
 import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.rdd.RDD
+import org.apache.spark.sql.DataFrame
 
 /**
   * Created by feiyu on 5/10/16.
@@ -16,7 +17,7 @@ class RecognizerModel(sparkContext: SparkContext) {
   /**
     * Load training data to LabeledPoint format
     */
-  protected def loadTrainingData(trainFilePath: String): RDD[LabeledPoint] = {
+  protected def loadTrainingDataToLabeledPoint(trainFilePath: String): RDD[LabeledPoint] = {
     //val trainFilePath = "src/main/resources/train/train.csv"
     val rawData = sc.textFile(trainFilePath)
     val labeledPoint = rawData.mapPartitionsWithIndex((i, iterator) => {
@@ -34,10 +35,21 @@ class RecognizerModel(sparkContext: SparkContext) {
       LabeledPoint(label.toDouble, Vectors.dense(features))
     }).cache()
     val count = labeledPoint.count()
-    println(count)
+    println("num of lines: "+count)
 
     return labeledPoint.cache()
   }
+
+  /**
+    * Load training data to DataFrame format
+    */
+  protected def loadTrainingDataToDataFrame(trainFilePath: String): DataFrame = {
+    val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+    val train = sqlContext.createDataFrame(loadTrainingDataToLabeledPoint(trainFilePath))//.toDF("label", "features")
+    println(train.show())
+    return train
+  }
+
 
   protected def doEvaluation(test: RDD[LabeledPoint], model: ClassificationModel) {
     // Compute raw scores on the test set.

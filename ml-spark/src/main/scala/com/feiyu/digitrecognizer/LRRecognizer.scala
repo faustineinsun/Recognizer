@@ -2,7 +2,6 @@ package com.feiyu.digitrecognizer
 
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
-import org.apache.spark.mllib.classification.LogisticRegressionModel
 
 /**
   * Created by feiyu on 5/9/16.
@@ -15,12 +14,14 @@ object LRRecognizer{
       .setMaster("local")
     val sc = new SparkContext(conf)
 
+    val lrLBFGSModel = new RecognizerLogisticRegressionModel(sc)
     val trainFilePath = "src/main/resources/data/train.csv"
-    val modelPath = "src/main/resources/model/lr"
 
-    val lrModel = new RecognizerLogisticRegressionModel(sc)
-    lrModel.modelSelectionViaTrainValidationSplit(trainFilePath, true, modelPath)
+    val lrLBFGSModelPath = "src/main/resources/model/lr/lrLBFGS"
+    lrLBFGSModel.classificationModelLBFGS(trainFilePath, true, lrLBFGSModelPath, 0.8, 0.2)
 
-    val sameModel = LogisticRegressionModel.load(sc, modelPath)
+    //lrLBFGSModel.modelSelectionViaTrainValidationSplit(trainFilePath, 0.8, 0.2)
+
+    //val sameModel = LogisticRegressionModel.load(sc, modelPath)
   }
 }
