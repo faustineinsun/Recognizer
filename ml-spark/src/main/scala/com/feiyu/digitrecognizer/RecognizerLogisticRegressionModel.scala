@@ -17,8 +17,9 @@ class RecognizerLogisticRegressionModel(sparkContext: SparkContext) extends Reco
     * Standard feature scaling and L2 regularization are used by default.
     * This is a 10 classes multi-label classification problem, labels from 0 to 9
     */
-  def classificationModelLBFGS(trainFilePath: String, needEvaluation: Boolean, modelPath: String,
-                               splitTrain: Double, splitTest: Double) {
+  def getClassificationModelLBFGS(trainFilePath: String, testFilePath: String,
+                                  resultFilePath: String, modelPath: String,
+                                  needEvaluation: Boolean, splitTrain: Double, splitTest: Double) {
     // get labeledPoint from raw data
     val labeledPoint = loadTrainingDataToLabeledPoint(trainFilePath)
 
@@ -44,6 +45,11 @@ class RecognizerLogisticRegressionModel(sparkContext: SparkContext) extends Reco
     if (needEvaluation) {
       doEvaluation(test, model)
     }
+
+    // predict labels for digits in testing file
+    val testing = loadTestingDataToVector(testFilePath)
+    val predictions = model.predict(testing)
+    saveResultsToFile(predictions, resultFilePath)
   }
 
   /**
@@ -64,8 +70,8 @@ class RecognizerLogisticRegressionModel(sparkContext: SparkContext) extends Reco
     TrainValidationSplit will try all combinations of values and determine best model using the evaluator.
      */
     val paramMap = new ParamGridBuilder()
-      .addGrid(lr.regParam, Array(0.001, 1000.0))
-      .addGrid(lr.maxIter, Array(10, 50, 100))
+      .addGrid(lr.regParam, Array(0.001, 1000.0, 3000.0))
+      .addGrid(lr.maxIter, Array(10, 50, 100, 300))
       //.addGrid(lr.elasticNetParam, Array(0.0, 0.5, 1.0))
       //.addGrid(lr.threshold, Array(0.55))
       //.addGrid(lr.fitIntercept)
