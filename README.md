@@ -1,0 +1,5 @@
+- Setup project and Spark path
+    - `$ vim ~/.bash_profile`
+    - export RECOGNIZER_PRJ_DIR=/path/to/recognizer/
+    - export RECOGNIZER_SPARK_PATH=/path/to/spark-1.6.1/
+    - `$ source ~/.bash_profile`

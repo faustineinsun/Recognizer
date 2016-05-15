@@ -1,6 +1,8 @@
 var express = require('express')
 var fs = require("fs")
-var bodyParser = require('body-parser');
+var bodyParser = require('body-parser')
+var sys = require("sys")
+var exec = require("child_process").exec
 
 // find static files in ./public
 var app = express();
@@ -34,7 +36,14 @@ app.post('/saveimg', function(request, response) {
     }
     console.log("Upated file: "+filePath);
   });
+
+  function puts(error, stdout, stderr) {
+      sys.puts(stdout)
+  }
+
+  exec("${RECOGNIZER_PRJ_DIR}scripts/recognizeDigit.sh", puts)
 });
+
 
 app.set('port', (process.env.PORT || 5000))
 app.listen(app.get('port'), function() {
