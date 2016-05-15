@@ -6,6 +6,6 @@ INPUT_FILE=${RECOGNIZER_PRJ_DIR}web-nodejs/public/img/out.png
 OUTPUT_FILE=${RECOGNIZER_PRJ_DIR}web-nodejs/public/assets/prediction.json
 
 # run jar file on Spark
-${RECOGNIZER_SPARK_PATH}/bin/spark-submit $JAR_FILE $MODEL_PATH $INPUT_FILE $OUTPUT_FILE  
+${SPARK_HOME}bin/spark-submit $JAR_FILE $MODEL_PATH $INPUT_FILE $OUTPUT_FILE  
 
 

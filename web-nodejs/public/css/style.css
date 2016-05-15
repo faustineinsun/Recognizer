@@ -26,7 +26,16 @@ canvas{
   position: absolute;
   margin: 1%;
   width: 112px;
-  height: 112px;
+  height: 50px;
   left: 300px;
   top: 180px;
+}
+
+#showResult {
+  position: absolute;
+  margin: 1%;
+  width: 112px;
+  height: 112px;
+  left: 300px;
+  top: 240px;
 }

@@ -1,5 +1,7 @@
-- Setup project and Spark path
+- Setup environment
     - `$ vim ~/.bash_profile`
     - export RECOGNIZER_PRJ_DIR=/path/to/recognizer/
-    - export RECOGNIZER_SPARK_PATH=/path/to/spark-1.6.1/
+    - export SPARK_HOME=/path/to/spark-1.6.1/
+    - export MONGODB_HOME=/path/to/mongodb-3.2.6/
     - `$ source ~/.bash_profile`
+- `$ sbin/start-all.sh`

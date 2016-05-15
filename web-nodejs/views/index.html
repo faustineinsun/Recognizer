@@ -31,6 +31,7 @@
   <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
   <link rel="shortcut icon" href="img/favicon.png">
 
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
   <script type="text/javascript" src="js/jquery.min.js"></script>
   <!--script type="text/javascript" src="js/bootstrap.min.js"></script-->
   <!-- Latest compiled and minified JavaScript -->
@@ -57,16 +58,30 @@
     <div id="showtext"></div>
 
     <div id="showSavedImg"></div>
-    <img src="img/out.png" id="showSmallImg">
     <!--img src="img/out.png" id="showSmallImg"-->
     <div id="showAnswer"></div>
+    <div id="showResult" ng-app="resultApp" ng-controller="resultCtrl">
+      {{predictdigit}}
+    </div>
+    <script>
+    var app = angular.module('resultApp', []);
+    app.controller('resultCtrl', function($scope, $http) {
+      $scope.predictdigit = "Predicting...";
+
+      //$http.get('/contactlist').success(function(response) {
+      //$scope.predictdigit = response;
+      //});
+    });
+    </script>
 
     <button id="button-clearImg">Clear</button>
     <button id="button-saveDrawing">Save</button>
     <button id="button-showResult">Recognize Digit</button>
     <script type="text/javascript">
+    document.getElementById("button-showResult").style.visibility = "hidden";
+    document.getElementById("showResult").style.visibility = "hidden";
     var defaultStr = "Write a digit in the canvas and then click \"Save\"";
-    var afterSave = "Now it time to click \"Recognize Digit\"";
+    var afterSave = "Now it's time to click \"Recognize Digit\"";
     var showResult = "The digit you wrote was:";
     $('#showAnswer').text(defaultStr);
 
@@ -74,14 +89,25 @@
       $('#button-clearImg').click(function(){
         clearCanvas();
         $('#showAnswer').text(defaultStr);
+        document.getElementById("button-showResult").style.visibility = "hidden";
       });
+
       $('#button-saveDrawing').click(function(){
-        var imgdataurl = getImage();
-        $.post('/saveimg', {"imgurl":imgdataurl}, function() {});
         $('#showAnswer').text(afterSave);
+        document.getElementById("button-showResult").style.visibility = "visible";
+        var imgdataurl = getImage();
+        $.get('/generatetimebaseduuid', function(data){
+          var uuid = data;
+          var obj = {"uuid": uuid, "imgdataurl": imgdataurl, "predictdigit":"-1"};
+          console.log(obj);
+          $.post('/saveimgtomongodb', obj, function() {});
+        });
       });
+
       $('#button-showResult').click(function(){
+        document.getElementById("button-showResult").style.visibility = "hidden";
         $('#showAnswer').text(showResult);
+        document.getElementById("showResult").style.visibility = "visible";
       });
     });
     </script>
