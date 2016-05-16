@@ -4,6 +4,22 @@ var bodyParser = require('body-parser')
 var sys = require("sys")
 var exec = require("child_process").exec
 var uuid = require('uuid')
+var server = require('http').createServer(app);
+var socketio = require('socket.io')(server)
+server.listen(3066);
+
+// Watch file change
+var watch = require('node-watch');
+var predictionJsonFilePath = "public/assets/prediction.json";
+watch(predictionJsonFilePath, function(filename) {
+  console.log(">>> "+filename, ' changed');
+  fs.readFile(predictionJsonFilePath, 'utf8', function (err, data) {
+    if (err) throw err;
+    var obj = JSON.parse(data);
+    socketio.emit('digitpredicted', obj.digitpredicted);
+    console.log(">>> sent digitpredicted "+obj.digitpredicted +" to FE")
+  });
+});
 
 // MongoDB
 var mongojs = require('mongojs')

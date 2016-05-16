@@ -11,6 +11,8 @@
     "ejs": "^2.4.1",
     "mongojs": "^2.4.0",
     "uuid": "^2.0.2",
+    "node-watch": "^0.3.5",
+    "socket.io": "^1.4.6",
     "express": "^4.9.8"
   },
   "engines": {

@@ -31,7 +31,8 @@
   <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
   <link rel="shortcut icon" href="img/favicon.png">
 
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+  <!--script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script-->
   <script type="text/javascript" src="js/jquery.min.js"></script>
   <!--script type="text/javascript" src="js/bootstrap.min.js"></script-->
   <!-- Latest compiled and minified JavaScript -->
@@ -60,7 +61,8 @@
     <div id="showSavedImg"></div>
     <!--img src="img/out.png" id="showSmallImg"-->
     <div id="showAnswer"></div>
-    <div id="showResult" ng-app="app.controllers" ng-controller="resultCtrl">
+    <div id="showResult"></div>
+    <!--div id="showResult" ng-app="app.controllers" ng-controller="resultCtrl">
       {{predictdigit}}
     </div>
     <script>
@@ -76,11 +78,14 @@
 
     angular.module('app.controllers', ['app.services'])
     .controller('resultCtrl', function ($scope, DigitPredicted) {
+      $scope.$watch('predictdigit', function() {
+        console.log('hey, predictdigit has changed!');
+      });
       DigitPredicted.get().then(function (msg) {
         $scope.predictdigit = msg.data.digitpredicted;
       });
     });
-    </script>
+  </script-->
 
     <button id="button-clearImg">Clear</button>
     <button id="button-saveDrawing">Save</button>
@@ -93,16 +98,27 @@
     var showResult = "The digit you wrote was:";
     $('#showAnswer').text(defaultStr);
 
+    var socket = io.connect('http://localhost:3066');
+    socket.on('connect', function(data) {
+        console.log("Socketio connected!");
+    });
+    socket.on('digitpredicted', function(data) {
+        //console.log(data);
+        $('#showResult').text(data);
+    });
+
     $(document).ready(function(){
       $('#button-clearImg').click(function(){
         clearCanvas();
         $('#showAnswer').text(defaultStr);
         document.getElementById("button-showResult").style.visibility = "hidden";
+        document.getElementById("showResult").style.visibility = "hidden";
       });
 
       $('#button-saveDrawing').click(function(){
         $('#showAnswer').text(afterSave);
         document.getElementById("button-showResult").style.visibility = "visible";
+        document.getElementById("showResult").style.visibility = "hidden";
         var imgdataurl = getImage();
         $.get('/generatetimebaseduuid', function(data){
           var uuid = data;
@@ -113,10 +129,11 @@
       });
 
       $('#button-showResult').click(function(){
-        document.getElementById("button-showResult").style.visibility = "hidden";
         $('#showAnswer').text(showResult);
+        document.getElementById("button-showResult").style.visibility = "hidden";
         document.getElementById("showResult").style.visibility = "visible";
       });
+
     });
     </script>
 
