@@ -2,7 +2,7 @@ package com.feiyu.digitrecognizer.recognizer
 
 import java.awt.Image
 import java.awt.image.{BufferedImage, Raster}
-import java.io.File
+import java.io.{File, PrintWriter}
 import javax.imageio.ImageIO
 
 import org.apache.spark.mllib.classification.LogisticRegressionModel
@@ -55,6 +55,12 @@ object Recognizer {
     val lrLBFGSModel = LogisticRegressionModel.load(sc, lrLBFGSModelPath)
     val predictions = lrLBFGSModel.predict(testing)
     println("The digit you wrote was: " + predictions.toInt)
+
+    // save predict digit to file
+    new PrintWriter(new File(args(2))) {
+      write("{\"digitpredicted\":"+ predictions.toInt +"}");
+      close
+    }
 
     sc.stop()
   }

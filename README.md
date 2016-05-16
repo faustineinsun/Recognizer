@@ -5,3 +5,6 @@
     - export MONGODB_HOME=/path/to/mongodb-3.2.6/
     - `$ source ~/.bash_profile`
 - `$ sbin/start-all.sh`
+- Open new Terminal Tab
+    - `cd ${RECOGNIZER_PRJ_DIR}web-nodejs`
+    - `$ foreman start web` 

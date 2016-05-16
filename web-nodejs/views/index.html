@@ -60,17 +60,25 @@
     <div id="showSavedImg"></div>
     <!--img src="img/out.png" id="showSmallImg"-->
     <div id="showAnswer"></div>
-    <div id="showResult" ng-app="resultApp" ng-controller="resultCtrl">
+    <div id="showResult" ng-app="app.controllers" ng-controller="resultCtrl">
       {{predictdigit}}
     </div>
     <script>
-    var app = angular.module('resultApp', []);
-    app.controller('resultCtrl', function($scope, $http) {
-      $scope.predictdigit = "Predicting...";
+    angular.module('app.services', [])
+    .factory('DigitPredicted', function ($http) {
+      return {
+        get: function () {
+          //console.log("prediction.json");
+          return $http.get('/assets/prediction.json');
+        }
+      };
+    });
 
-      //$http.get('/contactlist').success(function(response) {
-      //$scope.predictdigit = response;
-      //});
+    angular.module('app.controllers', ['app.services'])
+    .controller('resultCtrl', function ($scope, DigitPredicted) {
+      DigitPredicted.get().then(function (msg) {
+        $scope.predictdigit = msg.data.digitpredicted;
+      });
     });
     </script>
 
@@ -98,7 +106,7 @@
         var imgdataurl = getImage();
         $.get('/generatetimebaseduuid', function(data){
           var uuid = data;
-          var obj = {"uuid": uuid, "imgdataurl": imgdataurl, "predictdigit":"-1"};
+          var obj = {"uuid": uuid, "imgdataurl": imgdataurl, "predictdigit": "-1"};
           console.log(obj);
           $.post('/saveimgtomongodb', obj, function() {});
         });

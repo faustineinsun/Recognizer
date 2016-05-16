@@ -40,6 +40,10 @@ app.get('/mongodbshowallrecords', function(req, res) {
 });
 
 app.post('/saveimgtomongodb', function(req, res) {
+  // initialize json file
+  fs.writeFileSync("public/assets/prediction.json", "{\"digitpredicted\":\"Predicting ...\"}");
+
+  // insert json obj into MongoDB
   mongodb.recognizer.insert(req.body, function(err, result) {
     if(err) {
       throw err;
