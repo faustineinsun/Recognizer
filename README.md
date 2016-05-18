@@ -1,3 +1,4 @@
+[Demo Video](https://goo.gl/VGedco) (< 5 minutes)
 - Setup environment
     - `$ vim ~/.bash_profile`
     - export RECOGNIZER_PRJ_DIR=/path/to/recognizer/
