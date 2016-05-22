@@ -8,6 +8,7 @@ ml-spark.iml
 train*.csv
 test*.csv
 lroutput
+venv/
 
 # Logs
 logs
